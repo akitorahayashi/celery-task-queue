@@ -41,18 +41,55 @@ A sample application for asynchronous task queues using Celery and Redis.
 
 ## API Usage Examples
 
-Once the server is running, you can test tasks using the following endpoints.
+Once the server is running, you can test various Celery features using the following endpoints.
 
-- **Create task**: POST `/tasks/`
-  - Request body: `{"message": "Hello World"}`
-  - Response: Task ID
+### Basic Tasks
+- **Addition**: GET `/add?x=5&y=3`
+  - Response: `{"task_id": "...", "status": "queued"}`
 
-- **Get task result**: GET `/tasks/{task_id}`
-  - Response: Task status and result
+- **Multiplication**: GET `/multiply?x=4&y=6`
+  - Response: `{"task_id": "...", "status": "queued"}`
 
-Example:
+- **Division**: GET `/divide?x=10&y=2`
+  - Response: `{"task_id": "...", "status": "queued"}`
+
+- **Random Delay**: GET `/random_delay`
+  - Response: `{"task_id": "...", "status": "queued"}`
+
+### Advanced Features
+- **Long Task with Progress**: GET `/long_task`
+  - Shows progress updates during execution
+
+- **Task Chain**: GET `/chain_example?x=2&y=3&z=4`
+  - Chains tasks: `(2 + 3) * 4 = 20`
+
+- **Group Task**: GET `/group_example?numbers=1,2,3,4,5`
+  - Sums multiple numbers in parallel
+
+- **Callback Example**: GET `/callback_example?x=5&y=10`
+  - Adds numbers then processes the result
+
+### Task Results
+- **Get Task Result**: GET `/tasks/{task_id}`
+  - Response examples:
+    - `{"status": "PENDING"}`
+    - `{"status": "PROGRESS", "progress": {"current": 5, "total": 10}}`
+    - `{"status": "SUCCESS", "result": 8}`
+    - `{"status": "FAILURE", "info": "Error message"}`
+
+### Example Usage
 ```bash
-curl -X POST http://localhost:8000/tasks/ -H "Content-Type: application/json" -d '{"message": "Test task"}'
+# Basic addition
+curl "http://localhost:8080/add?x=5&y=3"
+
+# Get result (replace with actual task_id)
+curl "http://localhost:8080/tasks/your-task-id-here"
+
+# Task chain
+curl "http://localhost:8080/chain_example?x=2&y=3&z=4"
+
+# Group task
+curl "http://localhost:8080/group_example?numbers=1,2,3,4,5"
 ```
 
 ## Troubleshooting
