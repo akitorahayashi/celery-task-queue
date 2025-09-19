@@ -1,5 +1,5 @@
 [project]
-name = "celery-queue-sample"
+name = "celery-task-queue"
 version = "0.1.0"
 description = "A sample application for asynchronous task queues using Celery and Redis."
 requires-python = ">=3.12,<3.13"
