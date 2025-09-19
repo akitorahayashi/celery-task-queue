@@ -1,6 +1,6 @@
 # Celery Queue Sample
 
-A sample application for asynchronous task queues using Celery and Redis.
+A sample application for asynchronous task queues.
 
 ## Overview
 
@@ -25,7 +25,7 @@ A sample application for asynchronous task queues using Celery and Redis.
 
 1. **Start Celery worker**:
    ```bash
-   uv run celery -A celery.app worker --loglevel=info
+   uv run celery -A celery_app.app worker --loglevel=info
    ```
 
 2. **Start FastAPI server**:
@@ -64,7 +64,7 @@ Once the server is running, you can test various Celery features using the follo
   - Chains tasks: `(2 + 3) * 4 = 20`
 
 - **Group Task**: GET `/group_example?numbers=1,2,3,4,5`
-  - Sums multiple numbers in parallel
+  - Sums multiple numbers using a single task
 
 - **Callback Example**: GET `/callback_example?x=5&y=10`
   - Adds numbers then processes the result
