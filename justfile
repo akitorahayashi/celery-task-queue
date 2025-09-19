@@ -14,7 +14,10 @@ lint: ## Perform static code analysis (check) using Black and Ruff
   uv run ruff check .
 
 e2e-test:
+  uv sync --group dev
+  docker compose up -d
   uv run pytest tests/e2e
+  docker compose down
 
 stop:
   docker compose down
