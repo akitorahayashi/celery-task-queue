@@ -1,0 +1,25 @@
+services:
+  redis:
+    image: ${REDIS_IMAGE}
+    ports:
+      - "6379:6379"
+
+  worker:
+    build:
+      context: .
+      dockerfile: celery_app/Dockerfile
+    depends_on:
+      - redis
+    env_file:
+      - .env
+
+  api:
+    build:
+      context: .
+      dockerfile: api/Dockerfile
+    depends_on:
+      - redis
+    env_file:
+      - .env
+    ports:
+      - "${API_HOST_PORT}:${API_HOST_PORT}"

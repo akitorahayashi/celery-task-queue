@@ -1,0 +1,57 @@
+[project]
+name = "celery-queue-sample"
+version = "0.1.0"
+description = "A sample application for asynchronous task queues using Celery and Redis."
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "celery[redis]>=5.5.1",
+    "fastapi>=0.115.12",
+    "redis>=5.2.1",
+    "uvicorn>=0.34.2",
+]
+
+[dependency-groups]
+dev = [
+    "black>=25.9.0",
+    "ruff>=0.13.1",
+]
+
+[tool.black]
+target-version = ['py312']
+exclude = '''
+/(
+    \.git
+    | \.mypy_cache
+    | \.venv
+    | venv
+    | env
+    | build
+    | dist
+    | .*/(bin|lib|share|etc)
+    | .*/pyvenv\.cfg
+)/
+'''
+
+
+[tool.ruff]
+target-version = "py312"
+
+exclude = [
+	"__pycache__",
+	"migrations",
+	"db.sqlite3",
+	"*.pyc",
+	".venv",
+	"venv",
+	"env",
+	"*/bin/**",
+	"*/lib/**",
+	"*/share/**",
+	"*/etc/**",
+	"*/pyvenv.cfg"
+]
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
+# E501 (line too long) and F841 (unused variable) are ignored
+ignore = ["E501", "F841"]
