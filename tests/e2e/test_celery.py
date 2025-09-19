@@ -118,14 +118,20 @@ class TestCeleryE2E:
         data = response.json()
         task_id = data["task_id"]
 
-        time.sleep(3)
+        # Wait for completion with timeout
+        timeout = 15
+        start_time = time.time()
+        while time.time() - start_time < timeout:
+            result_response = requests.get(f"{base_url}/tasks/{task_id}")
+            assert result_response.status_code == 200
+            result_data = result_response.json()
+            if result_data["status"] not in ["PENDING", "STARTED"]:
+                break
+            time.sleep(0.5)
 
-        result_response = requests.get(f"{base_url}/tasks/{task_id}")
-        assert result_response.status_code == 200
-        result_data = result_response.json()
         assert result_data["status"] == "SUCCESS"
-        # Group returns list of results, sum them
-        assert sum(result_data["result"]) == 15  # 1+2+3+4+5 = 15
+        # sum_numbers task returns the sum directly
+        assert result_data["result"] == 15  # 1+2+3+4+5 = 15
 
     def test_callback_example(self, base_url):
         """Test callback task."""

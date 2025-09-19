@@ -45,7 +45,7 @@ def process_result(result: Any) -> str:
 
 
 @app.task
-def add_numbers(numbers: list) -> int:
+def sum_numbers(numbers: list) -> int:
     """Task to sum a list of numbers."""
     time.sleep(1)
     return sum(numbers)
@@ -57,3 +57,5 @@ def random_delay_task() -> str:
     delay = random.uniform(1, 3)
     time.sleep(delay)
     return f"Delayed for {delay:.2f} seconds"
+
+

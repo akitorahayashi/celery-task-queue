@@ -4,7 +4,7 @@ from celery import chain, group, chord
 
 from .tasks import (
     add, multiply, divide, long_task, process_result,
-    add_numbers, random_delay_task
+    sum_numbers, random_delay_task
 )
 from celery_app.app import app as celery_app
 
@@ -68,8 +68,8 @@ def enqueue_group_example(numbers: str):
     try:
         # Parse comma-separated numbers
         nums = [int(n.strip()) for n in numbers.split(",")]
-        # Group: sum all numbers
-        res = group(add_numbers.s([n]) for n in nums).delay()
+        # Group: sum all numbers using sum_numbers task
+        res = sum_numbers.delay(nums)
         return {"task_id": res.id, "status": "queued", "description": f"Sum of {nums}"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
