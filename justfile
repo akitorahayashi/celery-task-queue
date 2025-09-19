@@ -9,7 +9,7 @@ format:
 	uv run black .
 	uv run ruff check . --fix
 
-lint: ## Perform static code analysis (check) using Black and Ruff
+lint: 
   uv run black --check .
   uv run ruff check .
 
